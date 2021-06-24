@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
 
 const UserModel = require("./models/user.js");
 const SpiderModel = require("./models/spider");
+const EventModel = require("./models/event");
 
 // Database environment config
 const env = process.env.NODE_ENV || "development";
@@ -33,10 +34,13 @@ if (env !== "production") {
 
 const User = UserModel(sequelize, Sequelize);
 const Spider = SpiderModel(sequelize, Sequelize);
+const Event = EventModel(sequelize, Sequelize);
 
 // Relationships
 User.hasMany(Spider);
 Spider.belongsTo(User);
+Spider.hasMany(Event);
+Event.belongsTo(Spider);
 
 // Authenticate db and log connection or err
 sequelize
@@ -49,4 +53,5 @@ module.exports = {
   Sequelize,
   User,
   Spider,
+  Event,
 };
