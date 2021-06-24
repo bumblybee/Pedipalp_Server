@@ -1,9 +1,18 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const { isAuth } = require("../middleware/isAuth");
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const {
+  getCurrentUser,
+  signupUser,
+  loginUser,
+  logoutUser,
+} = require("../controllers/userController");
+const { errorWrapper } = require("../handlers/errorHandlers");
+
+router.get("/current", isAuth, errorWrapper(getCurrentUser));
+router.post("/signup", errorWrapper(signupUser));
+router.post("/login", errorWrapper(loginUser));
+router.post("/logout", logoutUser);
 
 module.exports = router;
