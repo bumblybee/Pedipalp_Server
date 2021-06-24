@@ -8,8 +8,11 @@ router
   .post(errorWrapper(controllers.createOne));
 // router.route("/").get(controllers.getMany).post(controllers.createOne);
 
-// router.route("/:id").put(controllers.updateOne);
-// //   .post(errorWrapper(controllers.updateOrCreate))
-// //   .delete(errorWrapper(controllers.deleteOne));
+router
+  .route("/:id")
+  .get(controllers.getSpider)
+  .put(controllers.updateOne)
+  .post(errorWrapper(controllers.updateOrCreate))
+  .delete(errorWrapper(controllers.deleteOne));
 
 module.exports = router;
