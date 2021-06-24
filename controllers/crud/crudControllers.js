@@ -51,7 +51,7 @@ exports.createOne = (model) => async (req, res) => {
     { ...req.body },
     { returning: true, plain: true }
   );
-  console.log(record);
+
   if (!record) throw new CustomError("auth.userNotFound", "userError", 403);
 
   // const records = await model.findAll({
