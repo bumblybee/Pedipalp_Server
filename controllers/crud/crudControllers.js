@@ -27,12 +27,12 @@ exports.getOne = (model) => async (req, res) => {
 };
 
 exports.getMany = (model, sortOrder) => async (req, res) => {
-  // const { id: userId } = req.token.data;
+  const { id: userId } = req.token.data;
 
-  // if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+  if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
 
   const records = await model.findAll({
-    where: { isDeleted: false },
+    where: { isDeleted: false, userId },
     attributes: {
       exclude: ["userId", "isDeleted", "createdAt", "updatedAt", "deletedAt"],
     },
@@ -43,12 +43,12 @@ exports.getMany = (model, sortOrder) => async (req, res) => {
 };
 
 exports.createOne = (model) => async (req, res) => {
-  // const { id: userId } = req.token.data;
+  const { id: userId } = req.token.data;
 
-  // if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+  if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
 
   const record = await model.create(
-    { ...req.body },
+    { ...req.body, userId },
     { returning: true, plain: true }
   );
 
@@ -66,9 +66,9 @@ exports.createOne = (model) => async (req, res) => {
 
 exports.updateOne = (model, sortOrder) => async (req, res) => {
   const id = req.params.id;
-  // const { id: userId } = req.token.data;
+  const { id: userId } = req.token.data;
 
-  // if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+  if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
 
   const record = await model.update(req.body, {
     where: { [Op.and]: [{ id }, { userId }] },
@@ -89,9 +89,9 @@ exports.updateOne = (model, sortOrder) => async (req, res) => {
 
 exports.updateOrCreate = (model, sortOrder) => async (req, res) => {
   const id = req.params.id;
-  // const { id: userId } = req.token.data;
+  const { id: userId } = req.token.data;
 
-  // if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+  if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
 
   if (id === "undefined") {
     const record = await model.create({ ...req.body, userId });
@@ -127,9 +127,9 @@ exports.updateOrCreate = (model, sortOrder) => async (req, res) => {
 
 exports.deleteOne = (model, sortOrder) => async (req, res) => {
   const id = req.params.id;
-  // const { id: userId } = req.token.data;
+  const { id: userId } = req.token.data;
 
-  // if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+  if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
 
   const record = await model.update(
     { isDeleted: true },

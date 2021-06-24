@@ -1,10 +1,10 @@
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 const errorHandlers = require("./handlers/errorHandlers");
+const { isAuth } = require("./middleware/isAuth");
 var spidersRouter = require("./routes/spiders");
 var usersRouter = require("./routes/users");
 var eventsRouter = require("./routes/events");
@@ -31,8 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", usersRouter);
-app.use("/events", eventsRouter);
-app.use("/", spidersRouter);
+app.use("/events", isAuth, eventsRouter);
+app.use("/", isAuth, spidersRouter);
 
 // error handler
 
