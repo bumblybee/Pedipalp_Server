@@ -36,6 +36,7 @@ exports.getUser = async (id) => {
 
 exports.signupUser = async (user) => {
   const { username, password } = user;
+
   const existingCredentials = await User.findOne({
     where: { username },
   });
