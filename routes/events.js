@@ -7,9 +7,11 @@ router.route("/").post(errorWrapper(controllers.createEvent));
 
 router
   .route("/:id")
-  .get(controllers.getEvents)
-  .put(controllers.updateOne)
+  .get(controllers.getEvent)
+  .put(controllers.updateEvent)
   .post(errorWrapper(controllers.updateOrCreate))
   .delete(errorWrapper(controllers.deleteOne));
+
+router.route("/spider/:id").get(controllers.getSpiderEvents);
 
 module.exports = router;

@@ -2,8 +2,6 @@ const { Op } = require("sequelize");
 const { CustomError } = require("../../handlers/errorHandlers");
 
 exports.getOne = (model) => async (req, res) => {
-  res.json({ message: "hit" });
-  return;
   const id = req.params.id;
   const { id: userId } = req.token.data;
 
