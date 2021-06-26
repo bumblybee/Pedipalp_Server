@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
         field: "molted",
       },
+      slings: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        field: "slings",
+      },
       notes: {
         type: DataTypes.TEXT,
         field: "notes",

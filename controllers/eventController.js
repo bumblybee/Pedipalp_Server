@@ -9,7 +9,7 @@ module.exports = {
     const { id } = req.params;
 
     const record = await Event.findOne({
-      where: { id },
+      where: { [Op.and]: [{ id }, { isDeleted: false }] },
       order: [["date", "DESC"]],
       include: Spider,
     });
@@ -21,7 +21,7 @@ module.exports = {
     const { id: spiderId } = req.params;
 
     const records = await Event.findAll({
-      where: { spiderId },
+      where: { [Op.and]: [{ spiderId }, { isDeleted: false }] },
       order: [["date", "DESC"]],
     });
 

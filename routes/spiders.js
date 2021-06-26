@@ -6,7 +6,6 @@ router
   .route("/")
   .get(controllers.getMany)
   .post(errorWrapper(controllers.createOne));
-// router.route("/").get(controllers.getMany).post(controllers.createOne);
 
 router
   .route("/:id")
