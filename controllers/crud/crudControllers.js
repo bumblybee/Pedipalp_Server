@@ -52,13 +52,6 @@ exports.createOne = (model) => async (req, res) => {
 
   if (!record) throw new CustomError("auth.userNotFound", "userError", 403);
 
-  // const records = await model.findAll({
-  //   where: { [Op.and]: [{ userId }, { isDeleted: false }] },
-  //   attributes: {
-  //     exclude: ["userId", "isDeleted", "createdAt", "updatedAt", "deletedAt"],
-  //   },
-  // });
-
   res.status(201).json({ data: record });
 };
 
@@ -74,15 +67,15 @@ exports.updateOne = (model, sortOrder) => async (req, res) => {
     plain: true,
   });
 
-  const records = await model.findAll({
-    where: { [Op.and]: [{ userId }, { isDeleted: false }] },
-    attributes: {
-      exclude: ["userId", "isDeleted", "createdAt", "updatedAt", "deletedAt"],
-    },
-    order: [sortOrder],
-  });
+  // const records = await model.findAll({
+  //   where: { [Op.and]: [{ userId }, { isDeleted: false }] },
+  //   attributes: {
+  //     exclude: ["userId", "isDeleted", "createdAt", "updatedAt", "deletedAt"],
+  //   },
+  //   order: [sortOrder],
+  // });
 
-  res.status(201).json({ updatedRecord: record[1], data: records });
+  res.status(201).json({ data: record[1] });
 };
 
 exports.updateOrCreate = (model, sortOrder) => async (req, res) => {
