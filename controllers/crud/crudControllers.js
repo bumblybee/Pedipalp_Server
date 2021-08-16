@@ -131,14 +131,6 @@ exports.deleteOne = (model, sortOrder) => async (req, res) => {
     }
   );
 
-  // const recordsWithRecordRemoved = await model.findAll({
-  //   where: { [Op.and]: [{ userId }, { isDeleted: false }] },
-  //   attributes: {
-  //     exclude: ["userId", "isDeleted", "createdAt", "updatedAt", "deletedAt"],
-  //   },
-  //   order: [sortOrder] || [["createdAt", "ASC"]],
-  // });
-
   res.status(200).json({ data: record[1] });
 };
 

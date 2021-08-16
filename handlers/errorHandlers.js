@@ -7,6 +7,10 @@ exports.errorWrapper = (fn) => {
 };
 
 exports.developmentErrors = (err, req, res, next) => {
+  if (err.message === "argument str must be a string") {
+    res.status(401).json({ error: "user.unauthorized" });
+  }
+
   err.stack = err.stack || "";
   const errorDetails = {
     error: err.message,

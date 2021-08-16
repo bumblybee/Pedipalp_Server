@@ -1,6 +1,6 @@
 const { crudControllers } = require("./crud/crudControllers");
 const { Event, Spider } = require("../db");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 module.exports = {
   ...crudControllers(Event, [["id", "ASC"]], [["id", "ASC"]], [["id", "ASC"]]),
@@ -50,5 +50,31 @@ module.exports = {
     });
 
     res.status(201).json({ data: record[1] });
+  },
+
+  async deleteEvent(req, res) {
+    const id = req.params.id;
+    const { id: userId } = req.token.data;
+
+    if (!userId) throw new CustomError("user.unauthorized", "UserError", 401);
+
+    const record = await Event.update(
+      { isDeleted: true },
+      {
+        include: [
+          {
+            model: Spider,
+            as: "spider",
+            required: true,
+            where: { "$spider.userId$": userId },
+          },
+        ],
+        where: { id },
+        returning: true,
+        plain: true,
+      }
+    );
+
+    res.status(200).json({ data: record[1] });
   },
 };

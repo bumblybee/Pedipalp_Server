@@ -10,7 +10,7 @@ router
   .get(controllers.getEvent)
   .put(controllers.updateEvent)
   .post(errorWrapper(controllers.updateOrCreate))
-  .delete(errorWrapper(controllers.deleteOne));
+  .delete(errorWrapper(controllers.deleteEvent));
 
 router.route("/spider/:id").get(controllers.getSpiderEvents);
 
